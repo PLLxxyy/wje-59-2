@@ -9,17 +9,11 @@ import type {
 } from '../types/os';
 import { defaultThemeId, getThemeById, applyTheme } from '../themes';
 import { generateId } from '../utils/id';
+import { getAppWindowConfig, getDesktopIcons } from '../apps/registry';
 
 const STORAGE_KEY = 'retro-os-state-v1';
 
-const defaultDesktopIcons = [
-  { id: 'icon-mycomputer', appId: 'mycomputer' as AppId, label: '我的电脑', icon: '💻', x: 20, y: 20 },
-  { id: 'icon-recyclebin', appId: 'recyclebin' as AppId, label: '回收站', icon: '🗑️', x: 20, y: 110 },
-  { id: 'icon-notepad', appId: 'notepad' as AppId, label: '记事本', icon: '📝', x: 20, y: 200 },
-  { id: 'icon-paint', appId: 'paint' as AppId, label: '画图', icon: '🎨', x: 20, y: 290 },
-  { id: 'icon-browser', appId: 'browser' as AppId, label: '浏览器', icon: '🌐', x: 20, y: 380 },
-  { id: 'icon-minesweeper', appId: 'minesweeper' as AppId, label: '扫雷', icon: '💣', x: 20, y: 470 },
-];
+const defaultDesktopIcons = getDesktopIcons();
 
 const getInitialState = (): OSState => ({
   bootPhase: 'bios',
@@ -127,58 +121,7 @@ export const useOSStore = create<OSStore>((set, get) => {
 
       const newZIndex = state.zIndexCounter + 1;
 
-      const appConfigs: Record<AppId, Partial<WindowState>> = {
-        mycomputer: {
-          title: '我的电脑',
-          icon: '💻',
-          width: 600,
-          height: 400,
-          minWidth: 400,
-          minHeight: 300,
-        },
-        recyclebin: {
-          title: '回收站',
-          icon: '🗑️',
-          width: 500,
-          height: 350,
-          minWidth: 350,
-          minHeight: 250,
-        },
-        notepad: {
-          title: '记事本',
-          icon: '📝',
-          width: 500,
-          height: 400,
-          minWidth: 300,
-          minHeight: 200,
-        },
-        paint: {
-          title: '画图',
-          icon: '🎨',
-          width: 700,
-          height: 500,
-          minWidth: 400,
-          minHeight: 300,
-        },
-        browser: {
-          title: '浏览器',
-          icon: '🌐',
-          width: 700,
-          height: 500,
-          minWidth: 400,
-          minHeight: 300,
-        },
-        minesweeper: {
-          title: '扫雷',
-          icon: '💣',
-          width: 350,
-          height: 420,
-          minWidth: 250,
-          minHeight: 320,
-        },
-      };
-
-      const config = appConfigs[appId];
+      const config = getAppWindowConfig(appId);
       const offsetX = (state.windows.length % 5) * 30;
       const offsetY = (state.windows.length % 5) * 30;
 

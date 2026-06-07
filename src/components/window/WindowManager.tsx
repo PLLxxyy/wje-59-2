@@ -1,22 +1,9 @@
 import { useEffect, useRef } from 'react'
 import { useOSStore } from '@/store/useOSStore'
 import OSWindow from './OSWindow'
-import type { AppId } from '@/types/os'
-import MyComputer from '@/components/apps/MyComputer'
-import RecycleBin from '@/components/apps/RecycleBin'
-import Notepad from '@/components/apps/Notepad'
-import Paint from '@/components/apps/Paint'
-import Browser from '@/components/apps/Browser'
-import Minesweeper from '@/components/apps/Minesweeper'
+import { getAppRenderers } from '@/apps/registry'
 
-const appRenderers: Record<AppId, (windowId: string) => React.ReactNode> = {
-  mycomputer: (windowId) => <MyComputer windowId={windowId} />,
-  recyclebin: (windowId) => <RecycleBin windowId={windowId} />,
-  notepad: (windowId) => <Notepad windowId={windowId} />,
-  paint: (windowId) => <Paint windowId={windowId} />,
-  browser: (windowId) => <Browser windowId={windowId} />,
-  minesweeper: (windowId) => <Minesweeper windowId={windowId} />,
-}
+const appRenderers = getAppRenderers()
 
 export default function WindowManager() {
   const { windows, maximizeWindow, restoreWindow } = useOSStore()

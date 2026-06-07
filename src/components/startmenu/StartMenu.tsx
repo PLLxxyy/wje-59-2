@@ -1,15 +1,9 @@
 import { useEffect, useRef } from 'react';
 import { useOSStore } from '@/store/useOSStore';
 import StartMenuItem from './StartMenuItem';
+import { getStartMenuItems } from '@/apps/registry';
 
-const menuItems = [
-  { appId: 'mycomputer' as const, icon: '💻', label: '我的电脑' },
-  { appId: 'recyclebin' as const, icon: '🗑️', label: '回收站' },
-  { appId: 'notepad' as const, icon: '📝', label: '记事本' },
-  { appId: 'paint' as const, icon: '🎨', label: '画图' },
-  { appId: 'browser' as const, icon: '🌐', label: '浏览器' },
-  { appId: 'minesweeper' as const, icon: '💣', label: '扫雷' },
-];
+const menuItems = getStartMenuItems();
 
 export default function StartMenu() {
   const { showStartMenu, setShowStartMenu, setTheme, theme, resetOS } = useOSStore();

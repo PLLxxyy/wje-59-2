@@ -1,4 +1,6 @@
-export type AppId = 'mycomputer' | 'recyclebin' | 'notepad' | 'paint' | 'browser' | 'minesweeper';
+import type { AppId } from '@/apps/registry';
+
+export type { AppId };
 
 export type BootPhase = 'bios' | 'loading' | 'desktop';
 
