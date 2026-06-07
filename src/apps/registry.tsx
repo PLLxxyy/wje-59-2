@@ -1,4 +1,4 @@
-import type { ComponentType } from 'react';
+import type { ComponentType, ReactNode } from 'react';
 import MyComputer from '@/components/apps/MyComputer';
 import RecycleBin from '@/components/apps/RecycleBin';
 import Notepad from '@/components/apps/Notepad';
@@ -143,8 +143,8 @@ export const getAppWindowConfig = (id: AppId): AppWindowConfig => {
   };
 };
 
-export const getAppRenderers = (): Record<AppId, (windowId: string) => React.ReactNode> => {
-  const renderers = {} as Record<AppId, (windowId: string) => React.ReactNode>;
+export const getAppRenderers = (): Record<AppId, (windowId: string) => ReactNode> => {
+  const renderers = {} as Record<AppId, (windowId: string) => ReactNode>;
   appRegistry.forEach((app) => {
     const Component = app.component;
     renderers[app.id as AppId] = (windowId: string) => <Component windowId={windowId} />;
